@@ -49,15 +49,16 @@
                 "Authorization": `Bearer ${accessToken}`
             },
             body: JSON.stringify({
+              content: `from ${user.username} (discord)`,
                 embeds: [{
-                    title: `(discord) ${user.username}`, // Set the title to the user's username
+                    title: `Bug report`, // Set the title to the user's username
                     description: feedback,
                     color: 5602047
                 }]
             }),
         });
 
-            alert("Thanks for your feedback!");
+            alert("Feedback submitted successfully!");
             document.getElementById("feedbackForm").reset();
         }
 
