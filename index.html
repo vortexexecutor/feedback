@@ -42,7 +42,7 @@
 
             const webhookUrl = "https://discordapp.com/api/webhooks/1190666512982351983/Kom4kaWH_jQe2nUC6UbdSgxYJX8uorotKgk4pWE4wH8I1Kgo2ozW4wQr38cB86g5yoXv";
 
-            fetch(webhookUrl, {
+             fetch(webhookUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -50,8 +50,8 @@
             },
             body: JSON.stringify({
                 embeds: [{
-                    title: "Feedback Submission",
-                    description: `${user.username}: ${feedback}`,
+                    title: user.username, // Set the title to the user's username
+                    description: `**Source:** Discord\n${feedback}`,
                     color: 5607047
                 }]
             }),
