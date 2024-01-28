@@ -11,12 +11,36 @@
 <form id="feedbackForm">
     <label for="feedback">Enter your feedback:</label>
     <input type="text" id="feedback" name="feedback" required>
+    <button type="button" onclick="loginWithDiscord()">Login with Discord</button>
     <button type="button" onclick="sendFeedback()">Submit Feedback</button>
 </form>
 
 <script>
-    // JavaScript function to send feedback to Discord webhook
+    let accessToken; // Store the user's Discord access token
+
+    // Function to open Discord OAuth login window
+    function loginWithDiscord() {
+        // Replace 'YOUR_DISCORD_CLIENT_ID' with your Discord application's client ID
+        const clientId = '1186683131974135919';
+
+        // Redirect the user to Discord OAuth login
+        window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${window.location.href}&response_type=token&scope=identify`;
+    }
+
+    // Function to handle the callback after Discord OAuth login
+    function handleDiscordLogin() {
+        // Get the access token from the URL fragment
+        const urlParams = new URLSearchParams(window.location.hash.substr(1));
+        accessToken = urlParams.get('access_token');
+    }
+
+    // Function to send feedback to Discord along with user information
     function sendFeedback() {
+        if (!accessToken) {
+            alert('Please login with Discord first.');
+            return;
+        }
+
         // Replace 'YOUR_DISCORD_WEBHOOK_URL' with your actual Discord webhook URL
         const webhookUrl = 'https://discordapp.com/api/webhooks/1190666512982351983/Kom4kaWH_jQe2nUC6UbdSgxYJX8uorotKgk4pWE4wH8I1Kgo2ozW4wQr38cB86g5yoXv';
 
@@ -26,6 +50,7 @@
         // Prepare the data to be sent to the Discord webhook
         const data = {
             content: feedback,
+            username: 'Anonymous', // You can replace this with the user's Discord username if available
         };
 
         // Use fetch to send a POST request to the Discord webhook
@@ -33,6 +58,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
             },
             body: JSON.stringify(data),
         })
@@ -47,6 +73,9 @@
             console.error('Error sending feedback to Discord:', error);
         });
     }
+
+    // Check if the page has the access token in the URL fragment
+    document.addEventListener('DOMContentLoaded', handleDiscordLogin);
 </script>
 
 </body>
