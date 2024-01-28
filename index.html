@@ -28,7 +28,7 @@
         const redirectUri = encodeURIComponent(window.location.href);
 
         // Redirect the user to Discord OAuth login
-        window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
+        window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_url=${redirectUri}&response_type=token&scope=identify`;
     }
 
     // Function to handle the callback after Discord OAuth login
