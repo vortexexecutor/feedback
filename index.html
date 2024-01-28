@@ -17,7 +17,7 @@
 
     <script>
         function authorizeDiscord() {
-            window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1186683131974135919&redirect_uri=https://vortexexecutor.github.io/feedback/&response_type=token&scope=identify";
+            window.location.href = "https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=https://vortexexecutor.github.io/feedback/&response_type=token&scope=identify";
         }
 
         async function submitFeedback() {
@@ -43,13 +43,19 @@
             const webhookUrl = "https://discordapp.com/api/webhooks/1190666512982351983/Kom4kaWH_jQe2nUC6UbdSgxYJX8uorotKgk4pWE4wH8I1Kgo2ozW4wQr38cB86g5yoXv";
 
             fetch(webhookUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
-                },
-                body: JSON.stringify({ content: `${user.username}: ${feedback}` }),
-            });
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                embeds: [{
+                    title: "Feedback Submission",
+                    description: `${user.username}: ${feedback}`,
+                    color: 16776960  // Yellow color (you can customize this)
+                }]
+            }),
+        });
 
             alert("Feedback submitted successfully!");
             document.getElementById("feedbackForm").reset();
