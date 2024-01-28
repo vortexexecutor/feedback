@@ -49,7 +49,7 @@
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${accessToken}`
                 },
-                body: JSON.stringify({ content: `(${user.username}): ${feedback}` }),
+                body: JSON.stringify({ content: `${user.username}: ${feedback}` }),
             });
 
             alert("Feedback submitted successfully!");
