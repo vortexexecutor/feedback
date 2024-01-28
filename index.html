@@ -50,9 +50,9 @@
             },
             body: JSON.stringify({
                 embeds: [{
-                    title: user.username, // Set the title to the user's username
-                    description: `(Discord)\n\n${feedback}`,
-                    color: 5607047
+                    title: `${user.username} (Discord)`, // Set the title to the user's username
+                    description: feedback,
+                    color: 5602047
                 }]
             }),
         });
