@@ -49,8 +49,9 @@
                 "Authorization": `Bearer ${accessToken}`
             },
             body: JSON.stringify({
+              content: `BUG REPORT`,
                 embeds: [{
-                    title: `**Bug report**`, // Set the title to the user's username
+                    title: `${user.username} - Discord`,
                     description: `**from ${user.username} (discord)\n** ${feedback}`,
                     color: 5602047
                 }]
