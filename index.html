@@ -9,7 +9,7 @@
     <h1>Feedback Form</h1>
     <button onclick="authorizeDiscord()">Authorize with Discord</button>
 
-    <form id="feedbackForm" style="display:none;">
+    <form id="feedbackForm" style="display:block;">
         <label for="feedback">Feedback:</label>
         <textarea id="feedback" name="feedback" required></textarea>
         <button type="button" onclick="submitFeedback()">Submit Feedback</button>
@@ -30,7 +30,7 @@
 
             const accessToken = getAccessToken();
             if (!accessToken) {
-                alert("Please authorize with Discord first.");
+                alert("Your scripts wont work.");
                 return;
             }
 
