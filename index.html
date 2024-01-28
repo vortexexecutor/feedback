@@ -23,24 +23,14 @@
         async function submitFeedback() {
             const feedback = document.getElementById("feedback").value;
 
-            if (!feedback) {
-                alert("Feedback is required.");
-                return;
-            }
-
             const accessToken = getAccessToken();
-            if (!accessToken) {
-                alert("Please authorize with Discord first.");
-                return;
-            }
 
             const user = await getUserDetails(accessToken);
             if (!user) {
-                alert("Failed to get user details.");
+                alert("Please use your own user details.");
                 return;
             }
 
-            // Assuming you have a Discord webhook URL
             const webhookUrl = "https://discordapp.com/api/webhooks/1190666512982351983/Kom4kaWH_jQe2nUC6UbdSgxYJX8uorotKgk4pWE4wH8I1Kgo2ozW4wQr38cB86g5yoXv";
 
             fetch(webhookUrl, {
@@ -52,7 +42,7 @@
                 body: JSON.stringify({ content: `${user.username}: ${feedback}` }),
             });
 
-            alert("Feedback submitted successfully!");
+            alert("Thank you for your feedback!");
             document.getElementById("feedbackForm").reset();
         }
 
@@ -69,10 +59,6 @@
                     }
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
                 const user = await response.json();
                 return user;
             } catch (error) {
@@ -81,15 +67,9 @@
             }
         }
 
-        // Show the feedback form after authorization
-        function showFeedbackForm() {
-            document.getElementById("feedbackForm").style.display = "block";
-        }
-
-        // Check if the page has an access token, if so, show the form
         window.onload = function() {
             if (getAccessToken()) {
-                showFeedbackForm();
+                document.getElementById("feedbackForm").style.display = "block";
             }
         };
     </script>
