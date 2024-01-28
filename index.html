@@ -30,7 +30,7 @@
 
             const accessToken = getAccessToken();
             if (!accessToken) {
-                alert("Please authorize first.");
+                alert("ERROR: You are not authorised.");
                 return;
             }
 
@@ -57,7 +57,7 @@
             }),
         });
 
-            alert("Thank you for your feedback!");
+            alert("Feedback submitted successfully!");
             document.getElementById("feedbackForm").reset();
         }
 
