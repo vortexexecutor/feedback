@@ -24,11 +24,11 @@
         // Replace 'YOUR_DISCORD_CLIENT_ID' with your Discord application's client ID
         const clientId = '1186683131974135919';
 
-        // Replace 'YOUR_REDIRECT_URI' with the actual redirect URI for your application
+        // Use the current page's URL as the redirect URI
         const redirectUri = encodeURIComponent(window.location.href);
 
         // Redirect the user to Discord OAuth login
-        window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_url=${redirectUri}&response_type=token&scope=identify`;
+        window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
     }
 
     // Function to handle the callback after Discord OAuth login
