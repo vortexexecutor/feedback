@@ -30,7 +30,7 @@
 
             const accessToken = getAccessToken();
             if (!accessToken) {
-                alert("You need to authorize first.");
+                alert("ERROR: You are not authorised.");
                 return;
             }
 
@@ -40,16 +40,27 @@
                 return;
             }
 
-            const webhookUrl = "https://discordapp.com/api/webhooks/1190666512982351983/Kom4kaWH_jQe2nUC6UbdSgxYJX8uorotKgk4pWE4wH8I1Kgo2ozW4wQr38cB86g5yoXv";
+            try {
+        const embed = {
+            title: `${user.username}'s Feedback`,
+            description: feedback,
+            color: 0x3498db, // You can set the color using hexadecimal or decimal representation
+        };
 
-            fetch(webhookUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
-                },
-                body: JSON.stringify({ content: `${user.username}: ${feedback}` }),
-            });
+        const response = await fetch(webhookUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+                embeds: [embed],
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
             alert("Feedback submitted successfully!");
             document.getElementById("feedbackForm").reset();
@@ -79,16 +90,10 @@
                 return null;
             }
         }
-
-        // Show the feedback form after authorization
-        function showFeedbackForm() {
-            document.getElementById("feedbackForm").style.display = "block";
-        }
-
-        // Check if the page has an access token, if so, show the form
+        
         window.onload = function() {
             if (getAccessToken()) {
-                showFeedbackForm();
+                document.getElementById("feedbackForm").style.display = "block";
             }
         };
     </script>
