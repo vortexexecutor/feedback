@@ -12,7 +12,7 @@
     <form id="feedbackForm" style="display:none;">
         <label for="feedback">Feedback:</label>
         <textarea id="feedback" name="feedback" required></textarea>
-        <button type="button" onclick="submitFeedback()">Submit Feedback</button>
+        <button onclick="submitFeedback()">Submit Feedback</button>
     </form>
 
     <script>
@@ -22,25 +22,14 @@
 
         async function submitFeedback() {
             const feedback = document.getElementById("feedback").value;
-
-            if (!feedback) {
-                alert("Feedback is required.");
-                return;
-            }
+            if (!feedback) return alert("Feedback is required.");
 
             const accessToken = getAccessToken();
-            if (!accessToken) {
-                alert("Please authorize with Discord first.");
-                return;
-            }
+            if (!accessToken) return alert("Please authorize with Discord first.");
 
             const user = await getUserDetails(accessToken);
-            if (!user) {
-                alert("Failed to get user details.");
-                return;
-            }
+            if (!user) return alert("Failed to get user details.");
 
-            // Assuming you have a Discord webhook URL
             const webhookUrl = "https://discordapp.com/api/webhooks/1190666512982351983/Kom4kaWH_jQe2nUC6UbdSgxYJX8uorotKgk4pWE4wH8I1Kgo2ozW4wQr38cB86g5yoXv";
 
             fetch(webhookUrl, {
@@ -57,41 +46,29 @@
         }
 
         function getAccessToken() {
-            const params = new URLSearchParams(window.location.hash.slice(1));
-            return params.get("access_token");
+            return new URLSearchParams(window.location.hash.slice(1)).get("access_token");
         }
 
         async function getUserDetails(accessToken) {
             try {
                 const response = await fetch("https://discord.com/api/users/@me", {
-                    headers: {
-                        "Authorization": `Bearer ${accessToken}`
-                    }
+                    headers: { "Authorization": `Bearer ${accessToken}` }
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-                const user = await response.json();
-                return user;
+                return await response.json();
             } catch (error) {
                 console.error("Error fetching user details:", error);
                 return null;
             }
         }
 
-        // Show the feedback form after authorization
         function showFeedbackForm() {
             document.getElementById("feedbackForm").style.display = "block";
         }
 
-        // Check if the page has an access token, if so, show the form
-        window.onload = function() {
-            if (getAccessToken()) {
-                showFeedbackForm();
-            }
-        };
+        window.onload = () => getAccessToken() && showFeedbackForm();
     </script>
 </body>
 </html>
